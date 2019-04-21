@@ -1,0 +1,139 @@
+/* Colors
+-------------------------- */
+$color-primary: #FF8040;
+$color-primary-hover: #E15616;
+$color-secondary: #FF6633;
+$color-secondary-light: #FF8040;
+$color-secondary-light-hover: #E15616;
+$color-base-gray: #ccc;
+$color-base-red: #ff3e4f;
+$color-white: #ffffff;
+$color-orange: #FF6600;
+$color-base-orange: #FFA533;
+$color-base-danger: #E15616;
+$color-base-success: #31C37C;
+
+/* Border
+  -------------------------- */
+$border-color-base: #ebeef5;
+$border-color-hover: #a7a7a8;
+$border-color-line: #e6e6e6;
+$border-color-header: #DAE2ED;
+$border-radius: 4px;
+$border-table-color: #E3E4E8;
+$border-dialog-color: #e5e5e5;
+$border-hint-color: #f9d08f;
+$border-radius: 3px;
+
+
+/* background
+  -------------------------- */
+$bg-color-gray: #F4F6F9;
+$bg-color-body: #f0f0f0;
+$bg-color-hover: #f7f7f7;
+$bg-color-disabled: #eeeeee;
+$bg-color-hint: #fff9eb;
+$bg-color-fixed-column: #e1f1fa;
+$bg-color-table-header: $bg-color-body;
+
+/* Font
+  -------------------------- */
+$font-family: "Microsoft YaHei", Arial;
+$font-size-mini: 8px;
+$font-size-small: 10px;
+$font-size-base: 12px;
+$font-size-normal: 14px;
+$font-size-large: 16px;
+$font-size-larger: 18px;
+$font-size-largest: 20px;
+$font-color-base: #333;
+$font-color-label: #666;
+$font-color-lighter: #999;
+$font-color-disabled: #bbb;
+$font-color-placeholder: #ccc;
+
+$box-shadow: 0 6px 12px rgba(0,0,0,.175);
+
+/* Link
+  -------------------------- */
+$link-color: #0088CC;
+$link-hover-color: #59bce4;
+
+/* Button
+  -------------------------- */
+$button-base-color: #fff;
+
+//默认按钮
+$button-default-bg: $button-base-color #F5F6FA;
+$button-default-border: $border-color-base $border-color-base;
+$button-default-color: $font-color-base $font-color-base;
+
+//辅助按钮（一般用于dropdown的splitbutton）
+$button-assist-bg: $color-primary $color-primary-hover;
+$button-assist-border: $color-primary $color-primary-hover;
+$button-assist-color: $button-base-color $button-base-color;
+
+//主要按钮
+$button-primary-bg: $color-primary $color-primary-hover;
+$button-primary-border: $color-primary $color-primary-hover;
+$button-primary-color: $button-base-color $button-base-color;
+
+/* Dialog
+  -------------------------- */
+$dialog-header-height: 48px;
+$dialog-header-title-size: $font-size-normal;
+$dialog-header-close-size: $font-size-normal;
+$dialog-header-close-color:$font-color-label;
+$dialog-header-close-hover-color: $color-primary;
+
+/* Table
+  -------------------------- */
+$table-row-height: 40px;
+$table-border-color: #E3E4E8;
+$table-header-color: #F9FAFD;
+$table-row-hover-color: #F4F6F9;
+
+/* Form
+  -------------------------- */
+$input-default-width: 130px;
+$input-default-height: 30px;
+$input-border-hover-color: #B3B5BA;
+$input-border-focus-color: #B3B5BA;
+
+/* Others
+  -------------------------- */
+$color-other12: #a55f07;
+$color-other31: #3bc4fc;
+
+// @mixin flexColumn{
+//   display: flex;
+//   flex-direction: column;
+//   height: 100%;
+// }
+
+// @mixin wh($width: 18px, $height:18px){
+//   width: $width;
+//   height: $height;
+// }
+
+// @mixin flexCenter(){
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
+
+// @mixin ellipsis($width: auto) {
+//   display: inline-block;
+//   width: $width;
+//   text-overflow: ellipsis;
+//   overflow: hidden;
+//   white-space: nowrap;
+// }
+
+// @mixin ellipsis-max($width: auto) {
+//   display: inline-block;
+//   max-width: $width;
+//   text-overflow: ellipsis;
+//   overflow: hidden;
+//   white-space: nowrap;
+// }
