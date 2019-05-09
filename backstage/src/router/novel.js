@@ -7,6 +7,10 @@ export default {
       component: () => import('../components/novel/novel-list')
     },
     {
+      path: 'modify',
+      component: () => import('../components/novel/novel-modify')
+    },
+    {
       path: 'add',
       component: () => import('../components/novel/novel-add')
     }
