@@ -5,6 +5,10 @@ export default {
     {
       path: 'list',
       component: () => import('../components/user/user-list')
+    },
+    {
+      path: 'modify',
+      component: () => import('../components/user/user-modify')
     }
   ]
 }

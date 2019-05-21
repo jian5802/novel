@@ -1,12 +1,17 @@
 <template lang="pug">
   .user
-    router-view
+    router-view(v-on:modify="modify")
 </template>
 
 <script>
 export default {
   data () {
     return {
+    }
+  },
+  methods: {
+    modify (data) {
+      this.$emit('modify', data)
     }
   }
 }

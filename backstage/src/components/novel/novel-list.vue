@@ -177,7 +177,7 @@ export default {
       })
     },
     modifyNovel (row) {
-      this.$router.push({path: '/admin/novel/modify'})
+      this.$router.push({path: '/admin/novel/modify', query: { book: row }})
     },
     deleteNovel (row) {
       let array = []

@@ -1,59 +1,11 @@
 const express = require('express');
-const multer = require('./novel.js');
+const multer = require('../novel.js');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.end('成功访问到服务器');
-});
-
-router.post('/login', (req, res) => {
-  let d = req.body;
-  let sql = 'select * from admin where state = 1 and name = ?';
-  conn.query(sql, d.name, (err, result) => {
-    if(err) {
-      res.json({
-        r: 'db_err'
-      });
-      return;
-    }
-    console.log(result)
-    // 账号不存在
-    if(!result.length) {
-      res.json({
-        r: 'u_not'
-      });
-      return;
-    }
-    // 判断密码是否正确
-    console.log(md5(d.password));
-    if(md5(d.password) != result[0].password) {
-      res.json({
-        r: 'p_err'
-      });
-      return;
-    }
-    //更新状态
-    let sql = 'UPDATE admin SET time = ? WHERE id = ?';
-    conn.query(sql, [new Date().toLocaleString(), result[0].id], (err, result) => {
-       if(err){
-         res.json({
-         	r: 'db_err'
-       	 });
-       	return;
-       }
-    });
-    return	res.json({
-         r: 'ok',
-         admin: result[0]
-     });
-  })
-});
-
 // 查询小说列表
-router.post('/novel/list', (req, res) => {
+router.post('/list', (req, res) => {
   let d = req.body;
   let total;
-  console.log(d);
   let start = d.pageSize * (d.pageNum - 1);
   let sqlNum = `select * from book where state = 1`;
   conn.query(sqlNum, (err, result) => {
@@ -84,9 +36,8 @@ router.post('/novel/list', (req, res) => {
 });
 
 // 删除小说
-router.post('/novel/del', (req, res) => {
+router.post('/del', (req, res) => {
   let d = req.body;
-  console.log(d);
   let ids = '(';
   for(let i=0; i<d.ids.length; i++){
     if(i == d.ids.length-1){
@@ -95,7 +46,6 @@ router.post('/novel/del', (req, res) => {
       ids = ids + d.ids[i] + ',';
     }
   }
-  console.log(ids);
   let sql = `update book set state = 0 where id in ${ids}`;
   conn.query(sql, (err, result) => {
     if(err){
@@ -111,9 +61,8 @@ router.post('/novel/del', (req, res) => {
   });
 });
 // 搜索小说
-router.post('/novel/search', (req, res) => {
+router.post('/search', (req, res) => {
   let d = req.body;
-  console.log(d);
   let total;
   let start = d.pageSize * (d.pageNum - 1);
   let sqlNum = `SELECT * FROM book WHERE NAME LIKE '%${d.name}%' and author LIKE '%${d.author}%'`;
@@ -144,9 +93,8 @@ router.post('/novel/search', (req, res) => {
   });
 });
 // 小说类型
-router.post('/novel/kind', (req, res) => {
+router.post('/kind', (req, res) => {
   let d = req.body;
-  console.log(d);
   let total;
   let start = d.pageSize * (d.pageNum - 1);
   let sqlNum = `SELECT * FROM book WHERE kind = ?`;
@@ -177,17 +125,15 @@ router.post('/novel/kind', (req, res) => {
   });
 });
 // 小说封面上传
-router.post('/novel/head', multer.single('file'), (req, res) => {
-  console.log(req.file);
+router.post('/head', multer.single('file'), (req, res) => {
   res.json({
     success: true,
     file: req.file
   });
 });
 // 添加小说
-router.post('/novel/add', (req, res) => {
+router.post('/add', (req, res) => {
   let d = req.body.book;
-  console.log(d);
   let sql = `insert into book (name, author, kind, introduce, cover, state, wordNum, readNum)
     values (?, ?, ?, ?, ?, ?, ?, ?)`;
   conn.query(sql, [d.name, d.author, d.kind, d.introduce, d.cover, 1, d.wordNum, d.readNum], (err, result) => {
@@ -205,7 +151,7 @@ router.post('/novel/add', (req, res) => {
   novelNum ++;
 });
 // 修改小说
-router.post('/novel/modify', (req, res) => {
+router.post('/modify', (req, res) => {
   let d = req.body.book;
   let sql = `update book set name = ?, author = ?, kind = ?, introduce = ?, 
     cover = ?, wordNum = ?, readNum = ? where id = ?`;
@@ -223,9 +169,8 @@ router.post('/novel/modify', (req, res) => {
   });
 });
 // 添加章节
-router.post('/novel/catalog', (req, res) => {
-  let d = req.body.book;
-  console.log(d)
+router.post('/catalog', (req, res) => {
+  let d = req.body;
   let time = new Date().toLocaleString();
   let sql = `insert into catalog (bookId, name, content, wordNum, time) values (?, ?, ?, ?, ?)`
   conn.query(sql, [d.bookId, d.name, d.content, d.wordNum, time], (err, result) => {

@@ -1,83 +1,70 @@
 <template lang="pug">
-  .novel-add
+  .user-modify
     .title
       el-breadcrumb.breadcrumb(separator-class="el-icon-arrow-right")
-        el-breadcrumb-item(:to="{ path: '/admin/novel/list' }") 小说管理
-        el-breadcrumb-item 添加小说
-    .book
-      .cover
-        .fm
+        el-breadcrumb-item(:to="{ path: '/admin/user/list' }") 用户管理
+        el-breadcrumb-item 修改用户信息
+    .information
+      .headImg
+        .tx
           span.bt *
-          span 封面
+          span 头像
         el-upload.avatar-uploader(
-          action="/admin/novel/head",
+          action="/admin/user/head",
           :show-file-list="false",
           :on-success="uploadSuccess",
           :before-upload="beforeUpload")
           img.avatar(v-if="imageUrl", :src="imageUrl")
           i.el-icon-plus(v-else, class="avatar-uploader-icon")
       .name
-        .sm
+        .mc
           span.bt *
-          span 书名
-        el-input.sm-input(type="text",
-          placeholder="请输入书名",
-          prefix-icon="el-icon-tickets",
-          v-model="book.name")
-      .author
-        .zz
-          span.bt *
-          span 作者
-        el-input.zz-input(type="text",
-          placeholder="请输入作者",
+          span 用户名
+        el-input.mc-input(type="text",
+          placeholder="请输入用户名",
           prefix-icon="el-icon-edit",
-          v-model="book.author")
-      .kind
-        .zl
+          v-model="user.name")
+      .pwd
+        .mm
           span.bt *
-          span 种类
-        select.zl-select(v-model="book.kind")
-          option(value="玄幻") 玄幻
-          option(value="奇幻") 奇幻
-          option(value="武侠") 武侠
-          option(value="仙侠") 仙侠
-          option(value="都市") 都市
-          option(value="现实") 现实
-          option(value="军事") 军事
-          option(value="历史") 历史
-          option(value="游戏") 游戏
-          option(value="体育") 体育
-          option(value="科幻") 科幻
-          option(value="悬疑灵异") 悬疑灵异
-          option(value="女生网") 女生网
-          option(value="二次元") 二次元
-      .wordNum
-        .zs
+          span 密码
+        el-input.mm-input(type="password",
+          placeholder="请输入密码",
+          prefix-icon="el-icon-setting",
+          v-model="user.password")
+      .checkPwd
+        .check
           span.bt *
-          span 字数(万)
-        el-input.zs-input(type="text",
-          placeholder="请输入字数",
-          prefix-icon="el-icon-menu",
-          v-model="book.wordNum")
-      .readNum
-        .ydl
+          span 确认密码
+        el-input.mm-input(type="password",
+          placeholder="请再次输入密码",
+          prefix-icon="el-icon-setting",
+          v-model="checkPass")
+      .sex
+        .xb
           span.bt *
-          span 阅读量(万)
-        el-input.ydl-input(type="text",
-          placeholder="请输入阅读量",
+          span 性别
+        select.xb-select(v-model="user.sex")
+          option(value="1") 男
+          option(value="0") 女
+      .phone
+        .sjhm
+          span.bt *
+          span 手机号码
+        el-input.sjhm-input(type="text",
+          placeholder="请输入手机号码",
           prefix-icon="el-icon-mobile-phone",
-          v-model="book.readNum")
+          v-model="user.phone")
       .introduce
         .js
-          span.bt *
-          span 简介
+          span 个性签名
         el-input.js-input(type="textarea",
-          placeholder="请输入作品简介",
+          placeholder="请输入个人简介",
           rows="4",
-          v-model="book.introduce")
+          v-model="user.introduce")
     .foot
       el-button(type="primary", @click="save") 保存
-      el-button(type="primary", @click="reset") 重置
+      el-button(type="primary", @click="goback") 返回
 </template>
 
 <script>
@@ -85,74 +72,63 @@ export default {
   data () {
     return {
       imageUrl: '',
-      book: {
-        cover: '',
-        name: '',
-        author: '',
-        kind: '玄幻',
-        introduce: '',
-        wordNum: '',
-        readNum: ''
-      }
+      checkPass: '',
+      user: Object
     }
+  },
+  mounted () {
+    this.$emit('modify', '/admin/user/modify')
+    this.user = this.$route.query.user
+    this.user.password = ''
+    this.imageUrl = this.user.head
   },
   methods: {
     uploadSuccess (res, file) {
-      this.imageUrl = '/images/book/' + res.file.filename
-      this.book.cover = '/images/book/' + res.file.filename
+      this.imageUrl = '/images/user/' + res.file.filename
+      this.user.head = '/images/user/' + res.file.filename
     },
     beforeUpload (file) {
-      const isJPG = file.type === 'image/jpeg'
       const isLt2M = file.size / 1024 / 1024 < 2
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
-        return false
-      }
       if (!isLt2M) {
         this.$message.error('上传头像图片大小不能超过 2MB!')
-        return false
       }
     },
     save () {
-      if (!this.book.cover || !this.book.name || !this.book.author || !this.book.introduce || !this.book.wordNum || !this.book.readNum) {
-        this.$alert('请填写完整小说信息')
-        return false
-      }
-      this.$axios({
-        url: '/admin/novel/add',
-        method: 'post',
-        data: this.book
-      }).then(res => {
-        if (res.data.success) {
-          this.$alert('添加小说成功')
-          this.reset()
+      if (!this.user.name || !this.user.password || !this.user.head || !this.user.phone || !this.checkPass) {
+        this.$alert('请输入完整的管理员信息')
+      } else {
+        if (this.checkPass !== this.user.password) {
+          this.$alert('两次密码输入不一致，请重新输入')
         } else {
-          this.$alert(res.data.message)
+          this.$axios({
+            url: '/admin/user/modify',
+            method: 'post',
+            data: this.user
+          }).then(res => {
+            if (res.data.success) {
+              this.$alert('修改用户信息成功', {
+                callback: this.goback
+              })
+            } else {
+              this.$alert(res.data.message)
+            }
+          }).catch(err => {
+            this.$alert(err.statusText)
+            this.goback()
+          })
         }
-      }).catch(err => {
-        this.$alert(err.statusText)
-        this.reset()
-      })
+      }
     },
-    reset () {
-      this.book.cover = ''
-      this.book.name = ''
-      this.book.author = ''
-      this.book.kind = '玄幻'
-      this.book.introduce = ''
-      this.book.wordNum = ''
-      this.book.readNum = ''
-      this.imageUrl = ''
+    goback () {
+      this.$emit('modify', '/admin/user/list')
+      this.$router.push({path: '/admin/user/list'})
     }
   }
 }
 </script>
 
 <style lang="scss">
-  .novel-add{
-    .bt{
-      color: $color-base-red;
-    }
+  .user-modify{
     .title{
       width: 100%;
       height: 50px;
@@ -162,32 +138,37 @@ export default {
         font-size: 14px;
       }
     }
-    .book{
+    .information{
       width: 100%;
       position: relative;
-      .cover{
+      .bt{
+        color: $color-base-red;
+      }
+      .headImg{
         width: 100%;
         position: relative;
-        .fm{
+        top: 25px;
+         .tx{
           width: 178px;
-          height: 178px;
+          height: 150px;
           position: absolute;
           left: 0;
           top: 2px;
-          line-height: 178px;
+          line-height: 150px;
         }
         .avatar-uploader:hover{
           border-color: $border-color-img;
         }
         .el-upload{
-          width: 130px;
-          height: 173px;
+          width: 150px;
+          height: 150px;
+          border-radius: 75px;
           margin: 0 auto;
           overflow: hidden;
         }
         .avatar-uploader{
           border: 1px dashed #d9d9d9;
-          border-radius: 6px;
+          border-radius: 75px;
           cursor: pointer;
           position: absolute;
           left: 200px;
@@ -203,10 +184,11 @@ export default {
           .avatar-uploader-icon{
             font-size: 28px;
             color: #8c939d;
-            width: 130px;
-            height: 173px;
-            line-height: 173px;
+            width: 150px;
+            height: 150px;
+            line-height: 150px;
             text-align: center;
+            border-radius: 75px;
           }
         }
       }
@@ -214,48 +196,65 @@ export default {
         position: relative;
         top: 200px;
         width: 100%;
-        .sm{
+        .mc{
           position: absolute;
           left: 0;
           width: 178px;
           height: 40px;
           line-height: 40px;
         }
-        .sm-input{
+        .mc-input{
           width: 300px;
           position: absolute;
           left: 200px;
         }
       }
-      .author{
+      .pwd{
         position: relative;
         top: 250px;
         width: 100%;
-        .zz{
+        .mm{
           position: absolute;
           left: 0;
           width: 178px;
           height: 40px;
           line-height: 40px;
         }
-        .zz-input{
+        .mm-input{
           width: 300px;
           position: absolute;
           left: 200px;
         }
       }
-      .kind{
+      .checkPwd{
         position: relative;
         top: 300px;
         width: 100%;
-        .zl{
+        .check{
           position: absolute;
           left: 0;
           width: 178px;
           height: 40px;
           line-height: 40px;
         }
-        .zl-select{
+        .mm-input{
+          width: 300px;
+          position: absolute;
+          left: 200px;
+        }
+      }
+      .sex{
+        position: relative;
+        top: 350px;
+        width: 100%;
+        .xb{
+          position: absolute;
+          left: 0;
+          width: 178px;
+          height: 40px;
+          line-height: 40px;
+        }
+        .xb-select{
           width: 300px;
           height: 40px;
           position: absolute;
@@ -266,35 +265,18 @@ export default {
           padding-left: 20px;
         }
       }
-      .wordNum{
-        position: relative;
-        top: 350px;
-        width: 100%;
-        .zs{
-          position: absolute;
-          left: 0;
-          width: 178px;
-          height: 40px;
-          line-height: 40px;
-        }
-        .zs-input{
-          width: 300px;
-          position: absolute;
-          left: 200px;
-        }
-      }
-      .readNum{
+      .phone{
         position: relative;
         top: 400px;
         width: 100%;
-        .ydl{
+        .sjhm{
           position: absolute;
           left: 0;
           width: 178px;
           height: 40px;
           line-height: 40px;
         }
-        .ydl-input{
+        .sjhm-input{
           width: 300px;
           position: absolute;
           left: 200px;

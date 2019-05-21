@@ -13,6 +13,10 @@ export default {
     {
       path: 'add',
       component: () => import('../components/novel/novel-add')
+    },
+    {
+      path: 'catalog',
+      component: () => import('../components/novel/novel-catalog')
     }
   ]
 }

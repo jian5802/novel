@@ -4,18 +4,23 @@
       img.head-img(:src="admin.head")
     el-menu.menu(background-color="#545c64", text-color="#fff", active-text-color="#ffd04b", @select="change",
       :default-active="activeIndex", :collapse="collapse", :style="{'width': width}", router=true)
-      el-submenu(index="3")
+      el-submenu(index="/admin/novel")
         template(slot="title")
           i.el-icon-document
           span 小说管理
         el-menu-item-group.group
-          el-menu-item.novelList(index="/admin/novel/list") 小说列表
-          el-menu-item.modifyNovel(index="/admin/novel/modify", disabled) 修改小说
-          el-menu-item.addNovel(index="/admin/novel/add") 添加小说
-      el-menu-item(index="/admin/user/list")
-        i.el-icon-menu
-        span 用户管理
-      el-menu-item(index="/admin/self")
+          el-menu-item.menuItem(index="/admin/novel/list", style="min-width: 100%") 小说列表
+          el-menu-item.menuItem(index="/admin/novel/add", style="min-width: 100%") 添加小说
+          el-menu-item.menuItem(index="/admin/novel/catalog", disabled, style="min-width: 100%") 添加章节
+          el-menu-item.menuItem(index="/admin/novel/modify", disabled, style="min-width: 100%") 修改小说
+      el-submenu(index="/admin/user")
+        template(slot="title")
+          i.el-icon-menu
+          span 用户管理
+        el-menu-item-group.group
+          el-menu-item.menuItem(index="/admin/user/list", style="min-width: 100%") 用户列表
+          el-menu-item.menuItem(index="/admin/user/modify", disabled, style="min-width: 100%") 修改用户
+      el-menu-item(index="/admin/self/modify", :route="selfRouter")
         i.el-icon-setting
         span 个人信息
     .right(:style="{'width': rightWid, 'left': width}")
@@ -41,7 +46,13 @@ export default {
       rightWid: '85%',
       admin: Object,
       activeIndex: '/admin/novel/list',
-      collapse: false
+      collapse: false,
+      selfRouter: {
+        path: '/admin/self/modify',
+        query: {
+          admin: this.$route.query
+        }
+      }
     }
   },
   mounted () {
@@ -73,8 +84,8 @@ export default {
       this.collapse = !this.collapse
     },
     gotoSelf () {
-      this.activeIndex = '/admin/self'
-      this.$router.push({ path: '/admin/self' })
+      this.activeIndex = '/admin/self/modify'
+      this.$router.push({path: '/admin/self/modify', query: {admin: this.admin}})
     },
     out () {
       this.$router.push({ path: '/' })
@@ -101,7 +112,7 @@ export default {
     .menu{
       height: 100%;
       float: left;
-      .novelList, .addNovel, .modifyNovel{
+      .menuItem{
         font-size: 14px;
         text-align: right;
       }
