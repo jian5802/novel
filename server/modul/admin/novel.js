@@ -152,7 +152,7 @@ router.post('/add', (req, res) => {
 });
 // 修改小说
 router.post('/modify', (req, res) => {
-  let d = req.body.book;
+  let d = req.body;
   let sql = `update book set name = ?, author = ?, kind = ?, introduce = ?, 
     cover = ?, wordNum = ?, readNum = ? where id = ?`;
   conn.query(sql, [d.name, d.author, d.kind, d.introduce, d.cover, d.wordNum, d.readNum, d.id], (err, result) => {
