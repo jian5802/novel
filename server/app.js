@@ -46,6 +46,7 @@ app.use("/admin/login", require("./modul/admin/login"));
 app.use("/admin/novel", require("./modul/admin/novel"));
 app.use("/admin/self", require("./modul/admin/self"));
 app.use("/admin/user", require("./modul/admin/user"));
+app.use("/user/login", require("./modul/user/login"));
 // 静态资源托管
 app.use(express.static(path.join(__dirname, 'static')));
 app.listen(88, () => {
