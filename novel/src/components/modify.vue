@@ -1,16 +1,16 @@
 <template lang="pug">
-  .self-modify
+  .modify
     .title
       el-breadcrumb.breadcrumb(separator-class="el-icon-arrow-right")
-        el-breadcrumb-item(:to="{ path: '/admin/self/modify' }") 个人信息
-        el-breadcrumb-item 修改个人信息
+        el-breadcrumb-item(:to="{ path: '/user/first', query: {user: this.user} }") 用户阅读系统
+        el-breadcrumb-item 修改用户信息
     .information
       .headImg
         .tx
           span.bt *
           span 头像
         el-upload.avatar-uploader(
-          action="/admin/self/head",
+          action="/admin/user/head",
           :show-file-list="false",
           :on-success="uploadSuccess",
           :before-upload="beforeUpload")
@@ -23,7 +23,7 @@
         el-input.mc-input(type="text",
           placeholder="请输入用户名",
           prefix-icon="el-icon-edit",
-          v-model="admin.name")
+          v-model="user.name")
       .pwd
         .mm
           span.bt *
@@ -31,7 +31,7 @@
         el-input.mm-input(type="password",
           placeholder="请输入密码",
           prefix-icon="el-icon-setting",
-          v-model="admin.password")
+          v-model="user.password")
       .checkPwd
         .check
           span.bt *
@@ -44,7 +44,7 @@
         .xb
           span.bt *
           span 性别
-        select.xb-select(v-model="admin.sex")
+        select.xb-select(v-model="user.sex")
           option(value="1") 男
           option(value="0") 女
       .phone
@@ -54,14 +54,14 @@
         el-input.sjhm-input(type="text",
           placeholder="请输入手机号码",
           prefix-icon="el-icon-mobile-phone",
-          v-model="admin.phone")
+          v-model="user.phone")
       .introduce
         .js
-          span 简介
+          span 个性签名
         el-input.js-input(type="textarea",
           placeholder="请输入个人简介",
           rows="4",
-          v-model="admin.introduce")
+          v-model="user.introduce")
     .foot
       el-button(type="primary", @click="save") 保存
       el-button(type="primary", @click="goback") 返回
@@ -73,35 +73,18 @@ export default {
     return {
       imageUrl: '',
       checkPass: '',
-      admin: Object
+      user: Object
     }
   },
   mounted () {
-    this.init()
+    this.user = this.$route.query.user
+    this.user.password = ''
+    this.imageUrl = this.user.head
   },
   methods: {
-    init () {
-      this.$axios({
-        url: '/admin/self/select',
-        method: 'post',
-        data: {
-          id: this.$sessionStorage.getItem('id')
-        }
-      }).then(res => {
-        if (res.data.success) {
-          this.admin = res.data.admin
-          this.admin.password = ''
-          this.imageUrl = this.admin.head
-        } else {
-          this.$alert(res.data.message)
-        }
-      }).catch(err => {
-        this.$alert(err.statusText)
-      })
-    },
     uploadSuccess (res, file) {
-      this.imageUrl = '/images/admin/' + res.file.filename
-      this.admin.head = '/images/admin/' + res.file.filename
+      this.imageUrl = '/images/user/' + res.file.filename
+      this.user.head = '/images/user/' + res.file.filename
     },
     beforeUpload (file) {
       const isLt2M = file.size / 1024 / 1024 < 2
@@ -110,22 +93,20 @@ export default {
       }
     },
     save () {
-      if (!this.admin.name || !this.admin.password || !this.admin.head || !this.admin.phone || !this.checkPass) {
-        this.$alert('请输入完整的管理员信息')
+      if (!this.user.name || !this.user.password || !this.user.head || !this.user.phone || !this.checkPass) {
+        this.$alert('请输入完整的用户信息')
       } else {
-        if (this.checkPass !== this.admin.password) {
+        if (this.checkPass !== this.user.password) {
           this.$alert('两次密码输入不一致，请重新输入')
         } else {
           this.$axios({
-            url: '/admin/self/modify',
+            url: '/admin/user/modify',
             method: 'post',
-            data: this.admin
+            data: this.user
           }).then(res => {
             if (res.data.success) {
-              this.$alert('修改个人信息成功, 请重新登录', {
-                callback: () => {
-                  this.$router.push({path: '/admin/login'})
-                }
+              this.$alert('修改用户信息成功', {
+                callback: this.goback
               })
             } else {
               this.$alert(res.data.message)
@@ -138,15 +119,14 @@ export default {
       }
     },
     goback () {
-      this.$emit('modify', '/admin/novel/list')
-      this.$router.push({path: '/admin/novel/list'})
+      this.$router.push({path: '/user/first'})
     }
   }
 }
 </script>
 
 <style lang="scss">
-  .self-modify{
+  .modify{
     .title{
       width: 100%;
       height: 50px;

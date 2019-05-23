@@ -17,6 +17,7 @@ axios.defaults.transformRequest = data => {
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.prototype.$axios = axios
+Vue.prototype.$sessionStorage = window.sessionStorage
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

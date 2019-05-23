@@ -133,7 +133,7 @@ router.post('/head', multer.single('file'), (req, res) => {
 });
 // 添加小说
 router.post('/add', (req, res) => {
-  let d = req.body.book;
+  let d = req.body;
   let sql = `insert into book (name, author, kind, introduce, cover, state, wordNum, readNum)
     values (?, ?, ?, ?, ?, ?, ?, ?)`;
   conn.query(sql, [d.name, d.author, d.kind, d.introduce, d.cover, 1, d.wordNum, d.readNum], (err, result) => {

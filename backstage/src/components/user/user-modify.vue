@@ -95,7 +95,7 @@ export default {
     },
     save () {
       if (!this.user.name || !this.user.password || !this.user.head || !this.user.phone || !this.checkPass) {
-        this.$alert('请输入完整的管理员信息')
+        this.$alert('请输入完整的用户信息')
       } else {
         if (this.checkPass !== this.user.password) {
           this.$alert('两次密码输入不一致，请重新输入')

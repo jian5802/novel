@@ -5,7 +5,7 @@ const axios = Axios.create({
     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
   }
 })
-// 指示是否跨站点访问控制请求
+// 携带cookie,保持session的一致
 axios.defaults.withCredentials = true
 // axios默认配置
 axios.defaults.timeout = 10000 // 超时时间

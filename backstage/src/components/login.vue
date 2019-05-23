@@ -59,7 +59,8 @@ export default {
                 }
               })
             } else if (res.data.r === 'ok') {
-              this.$router.push({ path: '/admin', query: res.data.admin })
+              this.$sessionStorage.setItem('id', res.data.admin.id)
+              this.$router.push({path: '/admin'})
             }
           }).catch(err => {
             alert(err.statusText)

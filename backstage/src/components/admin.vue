@@ -9,18 +9,18 @@
           i.el-icon-document
           span 小说管理
         el-menu-item-group.group
-          el-menu-item.menuItem(index="/admin/novel/list", style="min-width: 100%") 小说列表
-          el-menu-item.menuItem(index="/admin/novel/add", style="min-width: 100%") 添加小说
-          el-menu-item.menuItem(index="/admin/novel/catalog", disabled, style="min-width: 100%") 添加章节
-          el-menu-item.menuItem(index="/admin/novel/modify", disabled, style="min-width: 100%") 修改小说
+          el-menu-item.menuItem(index="/admin/novel/list", style="min-width: 90%") 小说列表
+          el-menu-item.menuItem(index="/admin/novel/add", style="min-width: 90%") 添加小说
+          el-menu-item.menuItem(index="/admin/novel/catalog", disabled, style="min-width: 90%") 添加章节
+          el-menu-item.menuItem(index="/admin/novel/modify", disabled, style="min-width: 90%") 修改小说
       el-submenu(index="/admin/user")
         template(slot="title")
           i.el-icon-menu
           span 用户管理
         el-menu-item-group.group
-          el-menu-item.menuItem(index="/admin/user/list", style="min-width: 100%") 用户列表
-          el-menu-item.menuItem(index="/admin/user/modify", disabled, style="min-width: 100%") 修改用户
-      el-menu-item(index="/admin/self/modify", :route="selfRouter")
+          el-menu-item.menuItem(index="/admin/user/list", style="min-width: 90%") 用户列表
+          el-menu-item.menuItem(index="/admin/user/modify", disabled, style="min-width: 90%") 修改用户
+      el-menu-item(index="/admin/self/modify")
         i.el-icon-setting
         span 个人信息
     .right(:style="{'width': rightWid, 'left': width}")
@@ -46,13 +46,7 @@ export default {
       rightWid: '85%',
       admin: Object,
       activeIndex: '/admin/novel/list',
-      collapse: false,
-      selfRouter: {
-        path: '/admin/self/modify',
-        query: {
-          admin: this.$route.query
-        }
-      }
+      collapse: false
     }
   },
   mounted () {
@@ -62,7 +56,7 @@ export default {
         that.height = window.innerHeight
       })()
     }
-    this.admin = this.$route.query
+    this.init()
     this.$router.push({ path: '/admin/novel/list' })
   },
   watch: {
@@ -80,12 +74,29 @@ export default {
     }
   },
   methods: {
+    init () {
+      this.$axios({
+        url: '/admin/self/select',
+        method: 'post',
+        data: {
+          id: this.$sessionStorage.getItem('id')
+        }
+      }).then(res => {
+        if (res.data.success) {
+          this.admin = res.data.admin
+        } else {
+          this.$alert(res.data.message)
+        }
+      }).catch(err => {
+        this.$alert(err.statusText)
+      })
+    },
     fold () {
       this.collapse = !this.collapse
     },
     gotoSelf () {
       this.activeIndex = '/admin/self/modify'
-      this.$router.push({path: '/admin/self/modify', query: {admin: this.admin}})
+      this.$router.push({path: '/admin/self/modify'})
     },
     out () {
       this.$router.push({ path: '/' })
@@ -112,7 +123,11 @@ export default {
     .menu{
       height: 100%;
       float: left;
+      .el-submenu__title, .el-menu-item{
+        text-align: center;
+      }
       .menuItem{
+        width: 50%;
         font-size: 14px;
         text-align: right;
       }
@@ -177,15 +192,17 @@ export default {
       }
     }
     .head{
-        cursor: pointer;
-        background-color: $color-base-name;
-        position: relative;
+      cursor: pointer;
+      background-color: $color-base-name;
+      position: relative;
+      height: 50px;
+      .head-img{
+        display: block;
         height: 50px;
-        .head-img{
-          height: 50px;
-          width: 50px;
-          border-radius: 50%;
-        }
+        width: 50px;
+        border-radius: 50%;
+        margin:  0 auto;
+      }
     }
   }
 </style>
