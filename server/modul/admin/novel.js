@@ -65,7 +65,7 @@ router.post('/search', (req, res) => {
   let d = req.body;
   let total;
   let start = d.pageSize * (d.pageNum - 1);
-  let sqlNum = `SELECT * FROM book WHERE NAME LIKE '%${d.name}%' and author LIKE '%${d.author}%'`;
+  let sqlNum = `SELECT * FROM book WHERE state = 1 and NAME LIKE '%${d.name}%' and author LIKE '%${d.author}%'`;
   conn.query(sqlNum, (err, result) => {
     if(err){
       res.json({
@@ -76,7 +76,8 @@ router.post('/search', (req, res) => {
     }
     total = result.length;
   });
-  let sql = `SELECT * FROM book WHERE NAME LIKE '%${d.name}%' and author LIKE '%${d.author}%' limit ${start}, ${d.pageSize}`;
+  let sql = `SELECT * FROM book WHERE state = 1 and NAME LIKE '%${d.name}%' and 
+  author LIKE '%${d.author}%' limit ${start}, ${d.pageSize}`;
   conn.query(sql, (err, result) => {
     if(err){
       res.json({

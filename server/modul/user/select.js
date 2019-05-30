@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-// 查询本周推荐
-router.post('/recommend', (req, res) => {
+// 获取当前用户
+router.post('/', (req, res) => {
   let d = req.body;
   let sql = 'select * from user where id = ?';
   conn.query(sql, d.id, (err, result) => {

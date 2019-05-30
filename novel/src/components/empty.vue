@@ -1,6 +1,5 @@
 <template lang="pug">
-  .user
-    router-view
+  .empty
 </template>
 
 <script>
@@ -9,15 +8,13 @@ export default {
     return {
     }
   },
-  mounted () {
+  created () {
+    this.$router.replace({path: '/user/kind', query: {kind: this.$route.query.kind}})
   }
 }
 </script>
 
 <style lang="scss">
-  .user{
-    position: relative;
-    margin: 0px;
-    padding: 0px;
+  .empty{
   }
 </style>

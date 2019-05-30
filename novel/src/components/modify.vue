@@ -77,11 +77,28 @@ export default {
     }
   },
   mounted () {
-    this.user = this.$route.query.user
-    this.user.password = ''
-    this.imageUrl = this.user.head
+    this.init()
   },
   methods: {
+    init () {
+      this.$axios({
+        url: '/user/select',
+        method: 'post',
+        data: {
+          id: this.$sessionStorage.getItem('id')
+        }
+      }).then(res => {
+        if (res.data.success) {
+          this.user = res.data.user
+          this.user.password = ''
+          this.imageUrl = this.user.head
+        } else {
+          this.$alert(res.data.message)
+        }
+      }).catch(err => {
+        this.$alert(err.statusText)
+      })
+    },
     uploadSuccess (res, file) {
       this.imageUrl = '/images/user/' + res.file.filename
       this.user.head = '/images/user/' + res.file.filename
@@ -89,7 +106,7 @@ export default {
     beforeUpload (file) {
       const isLt2M = file.size / 1024 / 1024 < 2
       if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
+        this.$message.error('上传图片大小不能超过 2MB!')
       }
     },
     save () {

@@ -60,7 +60,7 @@ export default {
               })
             } else if (res.data.r === 'ok') {
               this.$sessionStorage.setItem('id', res.data.user.id)
-              this.$router.push({path: '/user'})
+              this.$router.push({path: '/user/first'})
             }
           }).catch(err => {
             alert(err.statusText)

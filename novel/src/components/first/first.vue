@@ -5,7 +5,7 @@
       .head
         img.headImg(:src="user.head", @click="modify")
         span.introduce {{user.introduce}}
-      el-input.search(v-model="book", type="text", placeholder="请输入书名")
+      el-input.search(v-model="book", type="text", placeholder="请输入书名、作者")
       .ssbtn(@click="search")
       el-dropdown.name(@command="select")
         el-button {{user.name}}
@@ -15,78 +15,78 @@
           el-dropdown-item(command="out") 退出登录
     .left
       .one
-        .xh
+        .xh(@click="gotoLx('玄幻')")
           .icon
           span.lx 玄幻
           span.num {{kindNum.xh}}
-        .qh
+        .qh(@click="gotoLx('奇幻')")
           .icon
           span.lx 奇幻
           span.num {{kindNum.qh}}
       .two
-        .wx
+        .wx(@click="gotoLx('武侠')")
           .icon
           span.lx 武侠
           span.num {{kindNum.wx}}
-        .xx
+        .xx(@click="gotoLx('仙侠')")
           .icon
           span.lx 仙侠
           span.num {{kindNum.xx}}
       .three
-        .ds
+        .ds(@click="gotoLx('都市')")
           .icon
           span.lx 都市
           span.num {{kindNum.ds}}
-        .xs
+        .xs(@click="gotoLx('现实')")
           .icon
           span.lx 现实
           span.num {{kindNum.xs}}
       .four
-        .js
+        .js(@click="gotoLx('军事')")
           .icon
           span.lx 军事
           span.num {{kindNum.js}}
-        .ls
+        .ls(@click="gotoLx('历史')")
           .icon
           span.lx 历史
           span.num {{kindNum.ls}}
       .five
-        .yx
+        .yx(@click="gotoLx('游戏')")
           .icon
           span.lx 游戏
           span.num {{kindNum.yx}}
-        .ty
+        .ty(@click="gotoLx('体育')")
           .icon
           span.lx 体育
           span.num {{kindNum.ty}}
       .six
-        .kh
+        .kh(@click="gotoLx('科幻')")
           .icon
           span.lx 科幻
           span.num {{kindNum.kh}}
-        .xyly
+        .xyly(@click="gotoLx('悬疑灵异')")
           .icon
           span.lx 悬疑灵异
           span.num {{kindNum.xyly}}
       .seven
-        .nsw
+        .nsw(@click="gotoLx('女生网')")
           .icon
           span.lx 女生网
           span.num {{kindNum.nsw}}
-        .ecy
+        .ecy(@click="gotoLx('二次元')")
           .icon
           span.lx 二次元
           span.num {{kindNum.ecy}}
     .middel
       el-carousel.carousel(trigger="click")
-        el-carousel-item(v-for="item in bookImg", :key="item.url")
-          img.books(:src="item.url", @click="goDetail(item.name)")
-      .one
+        el-carousel-item(v-for="item in bookImg", :key="item.id")
+          img.books(:src="item.url", @click="goDetail(item.id)")
+      .one(@click="goDetail(38)")
         .title 火影里的聊天群
         .text 来到木叶没有金手指，多出一个聊天群
         .icon
           img(src="/images/book/first-mid-1.jpg")
-      .two
+      .two(@click="goDetail(39)")
         .title 我只想安静地打游戏
         .text 一滴血一条命，别人打游戏爆肝，我打游戏爆血。
         .icon
@@ -94,7 +94,7 @@
     .right
       h3.title 本周强推
       ul
-        li(v-for="item in recommend")
+        li(v-for="item in recommend", @click="goNovel(item.id)")
           span.lx 「{{item.kind}}」
           span.mz(:title="item.name") {{item.name}}
           span.zz(:title="item.author") {{item.author}}
@@ -126,18 +126,22 @@ export default {
       },
       bookImg: [
         {
+          id: 34,
           url: '/images/book/first-1.jpg',
           name: '变身之我真不是NPC'
         },
         {
+          id: 35,
           url: '/images/book/first-2.jpg',
           name: '影视世界的律师'
         },
         {
+          id: 36,
           url: '/images/book/first-3.jpg',
           name: '我师叔是林正英'
         },
         {
+          id: 37,
           url: '/images/book/first-4.jpg',
           name: '我有一张沾沾卡'
         }
@@ -151,7 +155,7 @@ export default {
   methods: {
     init () {
       this.$axios({
-        url: '/user/novel/recommend',
+        url: '/user/novel/first',
         method: 'post',
         data: {
           num: 11,
@@ -227,13 +231,19 @@ export default {
       }
     },
     modify () {
-      this.$router.push({path: '/user/modify', query: {user: this.user}})
+      this.$router.push({path: '/user/modify'})
     },
     search () {
-      this.$router.push({path: '/user/search', query: {name: this.book}})
+      this.$router.push({path: '/user/search', query: {book: this.book}})
     },
-    goDetail (name) {
-      console.log(name)
+    goDetail (id) {
+      this.$router.push({path: '/user/novel', query: {id: id}})
+    },
+    gotoLx (kind) {
+      this.$router.push({path: '/user/kind', query: {kind: kind}})
+    },
+    goNovel (id) {
+      this.$router.push({path: '/user/novel', query: {id: id}})
     }
   }
 }
