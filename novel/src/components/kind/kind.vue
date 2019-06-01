@@ -628,7 +628,6 @@ export default {
           cursor: pointer;
           overflow: hidden;
           font-size: 12px;
-          width: 130px;
           height: 20px;
           line-height: 20px;
           position: absolute;
@@ -799,7 +798,7 @@ export default {
               font-size: 12px;
               text-align: center;
               height: 20px;
-              width: 56px;
+              width: 70px;
               position: absolute;
               right: 0;
               top: 0;
