@@ -43,6 +43,7 @@ export default {
   data () {
     return {
       userName: '',
+      isSearch: false,
       total: 1,
       pageNum: 1,
       pageSize: 5,
@@ -55,6 +56,7 @@ export default {
   },
   methods: {
     init () {
+      this.isSearch = false
       this.$axios({
         url: '/admin/user/list',
         method: 'post',
@@ -75,7 +77,7 @@ export default {
       })
     },
     search () {
-      this.pageNum = 1
+      this.isSearch = true
       if (!this.userName) {
         this.init()
       } else {
@@ -185,7 +187,11 @@ export default {
     },
     handleCurrentChange (val) {
       this.pageNum = val
-      this.init()
+      if (this.isSearch) {
+        this.search()
+      } else {
+        this.init()
+      }
     }
   },
   filters: {
@@ -283,6 +289,9 @@ export default {
       .list-book-name{
         display: block;
       }
+    }
+    .page{
+      text-align: center;
     }
   }
 </style>

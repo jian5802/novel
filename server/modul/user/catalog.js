@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-//查询章节
 router.post('/list', (req, res) => {
   let d = req.body;
   let sql = `select * from catalog where state = 1 and bookId = '${d.bookId}'`;
@@ -18,7 +17,6 @@ router.post('/list', (req, res) => {
     })
   })
 })
-// 查询详情
 router.post('/detail', (req, res) => {
   let d = req.body;
   let sqlCatalog = `select * from catalog where state = 1 and id ='${d.id}'`;

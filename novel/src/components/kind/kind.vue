@@ -62,6 +62,18 @@
             span.gg-text 「{{item.lx}}」 {{item.text}}
         .right-foot
           img(src="../../images/gg.jpg")
+    .newbooks
+      .newbooks-top {{kind}}新书
+      .newbooks-content
+        .content-one(v-for="item in newBooks", :key="item.id")
+          .content-one-cover
+            img(:src="item.cover")
+          .content-one-name(@click="goDetail(item.id)") {{item.name}}
+          .content-one-js {{item.introduce}}
+          .content-one-zz
+            img(src="/images/admin/author.png")
+            span.zz-name {{item.author}}
+            span.gxzs 日更3千+
 </template>
 
 <script>
@@ -69,6 +81,7 @@ export default {
   data () {
     return {
       bjlj: {},
+      newBooks: [],
       footLeftList: [],
       footRightList: [],
       midList: [],
@@ -140,6 +153,7 @@ export default {
     this.getWeek()
     this.getMid()
     this.getMidFoot()
+    this.getnewBooks()
   },
   methods: {
     getWeek () {
@@ -198,6 +212,26 @@ export default {
           this.footRightList.push(res.data.new[2])
           this.footRightList.push(res.data.new[3])
           this.bjlj = res.data.new[4]
+        } else {
+          this.$alert(res.data.message)
+        }
+      }).catch(err => {
+        this.$alert(err.statusText)
+      })
+    },
+    getnewBooks () {
+      this.newBooks = []
+      this.$axios({
+        url: '/user/novel/new',
+        method: 'post',
+        data: {
+          kind: this.kind,
+          num: 12,
+          start: 6
+        }
+      }).then(res => {
+        if (res.data.success) {
+          this.newBooks = res.data.new
         } else {
           this.$alert(res.data.message)
         }
@@ -662,6 +696,117 @@ export default {
         img{
           cursor: pointer;
           max-width: 100%;
+        }
+      }
+    }
+    .newbooks{
+      width: 80%;
+      height: 500px;
+      margin: 0 auto;
+      position: relative;
+      .newbooks-top{
+        font-size: 18px;
+        font-weight: 600;
+        text-align: left;
+        width: 100%;
+        height: 30px;
+        line-height: 26px;
+        padding-bottom: 4px;
+        border-bottom: 1px solid $font-color-label;
+      }
+      .newbooks-content{
+        width: 100%;
+        height: 450px;
+        position: relative;
+        text-align: left;
+        .content-one{
+          position: relative;
+          display: inline-block;
+          width: 25%;
+          height: 150px;
+          border-bottom: 1px solid $border-color-line;
+          .content-one-cover{
+            overflow: hidden;
+            width: 72px;
+            height: 96px;
+            position: absolute;
+            top: 27px;
+            left: 0px;
+            box-shadow: 0 1px 6px rgba(0,0,0,.35), 0 0 5px #f9f2e9 inset;
+            img{
+              cursor: pointer;
+              max-height: 96px;
+              transition: all 0.5s;
+            }
+          }
+          .content-one-cover:hover img{
+            transform: scale(1.2);
+          }
+          .content-one-name{
+            cursor: pointer;
+            overflow: hidden;
+            width: 60%;
+            height: 25px;
+            line-height: 25px;
+            text-align: left;
+            font-size: 16px;
+            color: $font-user-first-bjlj;
+            position: absolute;
+            right: 10%;
+            top: 27px;
+          }
+          .content-one-name:hover{
+            color: $color-base-red;
+          }
+          .content-one-js{
+            overflow: hidden;
+            font-size: 12px;
+            color: $font-color-label;
+            width: 60%;
+            height: 40px;
+            line-height: 20px;
+            text-align: left;
+            position: absolute;
+            right: 10%;
+            top: 55px;
+          }
+          .content-one-zz{
+            width: 60%;
+            height: 20px;
+            position: absolute;
+            right: 10%;
+            top: 100px;
+            img{
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 20px;
+              height: 20px;
+            }
+            .zz-name{
+              display: inline-block;
+              width: 60%;
+              height: 20px;
+              text-align: left;
+              font-size: 12px;
+              line-height: 20px;
+              color: $font-user-detail;
+              position: absolute;
+              top: 0;
+              left: 22px;
+            }
+            .gxzs{
+              font-size: 12px;
+              text-align: center;
+              height: 20px;
+              width: 56px;
+              position: absolute;
+              right: 0;
+              top: 0;
+              border: 1px solid $color-base-red;
+              color: $color-base-red;
+            }
+          }
         }
       }
     }

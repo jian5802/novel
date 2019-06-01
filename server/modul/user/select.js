@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-// 获取当前用户
 router.post('/', (req, res) => {
   let d = req.body;
   let sql = 'select * from user where id = ?';

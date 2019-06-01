@@ -39,7 +39,9 @@
           template(slot-scope="scope")
             .cover
               img.list-book-cover(:src="scope.row.cover")
-            span.list-book-name {{ scope.row.name }}
+            .list-book-js
+              span.list-book-name {{ scope.row.name }}
+              span.list-book-finish ({{scope.row.finish | finish}})
         el-table-column(label="作者", min-width="5%", prop="author")
         el-table-column(label="简介", min-width="30%", prop="introduce")
         el-table-column(label="类型", min-width="10%", prop="kind")
@@ -71,10 +73,13 @@ export default {
   data () {
     return {
       book: '',
+      lx: '',
       author: '',
       total: 1,
       pageNum: 1,
       pageSize: 5,
+      isKind: false,
+      isSearch: false,
       novelList: [],
       delete: []
     }
@@ -82,8 +87,19 @@ export default {
   mounted () {
     this.init()
   },
+  filters: {
+    finish: function (val) {
+      if (val) {
+        return '完结'
+      } else {
+        return '连载'
+      }
+    }
+  },
   methods: {
     init () {
+      this.isKind = false
+      this.isSearch = false
       this.$axios({
         url: '/admin/novel/list',
         method: 'post',
@@ -104,7 +120,8 @@ export default {
       })
     },
     search () {
-      this.pageNum = 1
+      this.isSearch = true
+      this.isKind = false
       if (!this.book && !this.author) {
         this.init()
       } else {
@@ -121,6 +138,9 @@ export default {
           if (res.data.success) {
             this.novelList = res.data.novelList
             this.total = res.data.total
+            if ((this.total / this.pageSize) + 1 < this.pageNum) {
+              this.handleCurrentChange(1)
+            }
           } else {
             this.$alert(res.data.message)
           }
@@ -210,7 +230,9 @@ export default {
       })
     },
     drop (kind) {
-      this.pageNum = 1
+      this.lx = kind
+      this.isKind = true
+      this.isSearch = false
       this.$axios({
         url: '/admin/novel/kind',
         method: 'post',
@@ -223,6 +245,9 @@ export default {
         if (res.data.success) {
           this.novelList = res.data.novelList
           this.total = res.data.total
+          if ((this.total / this.pageSize) < this.pageNum) {
+            this.handleCurrentChange(1)
+          }
         } else {
           this.$alert(res.data.message)
         }
@@ -233,11 +258,23 @@ export default {
     },
     handleSizeChange (val) {
       this.pageSize = val
-      this.init()
+      if (this.isKind) {
+        this.drop(this.lx)
+      } else if (this.isSearch) {
+        this.search()
+      } else {
+        this.init()
+      }
     },
     handleCurrentChange (val) {
       this.pageNum = val
-      this.init()
+      if (this.isKind) {
+        this.drop(this.lx)
+      } else if (this.isSearch) {
+        this.search()
+      } else {
+        this.init()
+      }
     }
   }
 }
@@ -354,9 +391,20 @@ export default {
           transform: scale(1.2, 1.2);
         }
       }
-      .list-book-name{
-        display: block;
+      .list-book-js{
+        width: 100%;
+        height: 23px;
+        line-height: 23px;
+        overflow: hidden;
+        text-align: center;
+        .list-book-finish{
+          font-size: 12px;
+          color: $font-user-detail;
+        }
       }
+    }
+    .page{
+      text-align: center;
     }
   }
 </style>

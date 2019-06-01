@@ -2,7 +2,6 @@ const express = require('express');
 let multer = require('../admin.js');
 const router = express.Router();
 
-// 管理员头像上传
 router.post('/head', multer.single('file'), (req, res) => {
   res.json({
     success: true,
@@ -10,7 +9,6 @@ router.post('/head', multer.single('file'), (req, res) => {
   })
 })
 
-// 修改个人信息
 router.post('/modify', (req, res) => {
   let d = req.body;
   console.log(d);
@@ -26,6 +24,23 @@ router.post('/modify', (req, res) => {
     }
     return res.json({
       success: true
+    })
+  });
+});
+router.post('/select', (req, res) => {
+  let d = req.body;
+  let sql = 'select * from admin where id = ?';
+  conn.query(sql, d.id, (err, result) => {
+    if(err){
+      res.json({
+        success: false,
+        message: '数据库错误'
+      })
+      return;
+    }
+    return res.json({
+      success: true,
+      admin: result[0]
     })
   });
 });

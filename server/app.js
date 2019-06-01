@@ -8,7 +8,6 @@ global.md5 = require("md5");
 
 const app = express();
 
-// 配置请求头
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Credentials", true);
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
@@ -18,11 +17,6 @@ app.use((req, res, next) => {
 })
 
 let secret = 'sports.app.myweb.www';
-// 启用中间件
-app.use(cookieParser(secret));
-app.use(bodyParser.urlencoded({extended:true}));
-
-//启用session
 app.use(session({
     secret:secret,
     resave:true,
@@ -30,8 +24,9 @@ app.use(session({
     cookie: {maxAge:30*24*3600*1000}
 }));
 
+app.use(cookieParser(secret));
+app.use(bodyParser.urlencoded({extended:true}));
 
-// 数据库连接
 global.conn = mysql.createConnection({
     host: '127.0.0.1',
     user: 'root',
@@ -41,7 +36,6 @@ global.conn = mysql.createConnection({
 });
 conn.connect();
 
-// 配置子路由
 app.use("/admin/login", require("./modul/admin/login"));
 app.use("/admin/novel", require("./modul/admin/novel"));
 app.use("/admin/self", require("./modul/admin/self"));
@@ -50,7 +44,7 @@ app.use("/user/login", require("./modul/user/login"));
 app.use("/user/novel", require("./modul/user/novel"));
 app.use("/user/select", require("./modul/user/select"));
 app.use("/user/catalog", require("./modul/user/catalog"));
-// 静态资源托管
+
 app.use(express.static(path.join(__dirname, 'static')));
 app.listen(88, () => {
     console.log('服务器地址:http://localhost:88');

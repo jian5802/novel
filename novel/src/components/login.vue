@@ -4,9 +4,9 @@
       source(src="../assets/login.mp4", type="video/mp4")
       | 此视频文件为支付宝所有，在此仅供样式参考，如用到商业用途，请自行更换为其他视频或图片，否则造成的任何问题使用者本人承担，谢谢
     el-form.login-form(label-width="100px", size="medium", :rules="rules", ref="form", :model="form", status-icon)
-      el-form-item.oneItem(label="用户名：", prop="name", label-width="80px")
+      el-form-item.oneItem(label="用户名：", prop="name", label-width="100px")
         el-input(v-model="form.name", type="text")
-      el-form-item.twoItem(label="密码：", prop="password", label-width="80px")
+      el-form-item.twoItem(label="密码：", prop="password", label-width="100px")
         el-input(v-model="form.password", type="password")
       el-form-item
         el-button.submit(type="primary", @click="submit()") 登录

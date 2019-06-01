@@ -2,7 +2,6 @@ const express = require('express');
 const multer = require('../novel.js');
 const router = express.Router();
 
-// 查询小说列表
 router.post('/list', (req, res) => {
   let d = req.body;
   let total;
@@ -35,7 +34,6 @@ router.post('/list', (req, res) => {
   });
 });
 
-// 删除小说
 router.post('/del', (req, res) => {
   let d = req.body;
   let ids = '(';
@@ -60,12 +58,11 @@ router.post('/del', (req, res) => {
     })
   });
 });
-// 搜索小说
 router.post('/search', (req, res) => {
   let d = req.body;
   let total;
   let start = d.pageSize * (d.pageNum - 1);
-  let sqlNum = `SELECT * FROM book WHERE state = 1 and NAME LIKE '%${d.name}%' and author LIKE '%${d.author}%'`;
+  let sqlNum = `SELECT * FROM book WHERE NAME LIKE '%${d.name}%' and author LIKE '%${d.author}%'`;
   conn.query(sqlNum, (err, result) => {
     if(err){
       res.json({
@@ -76,8 +73,7 @@ router.post('/search', (req, res) => {
     }
     total = result.length;
   });
-  let sql = `SELECT * FROM book WHERE state = 1 and NAME LIKE '%${d.name}%' and 
-  author LIKE '%${d.author}%' limit ${start}, ${d.pageSize}`;
+  let sql = `SELECT * FROM book WHERE NAME LIKE '%${d.name}%' and author LIKE '%${d.author}%' limit ${start}, ${d.pageSize}`;
   conn.query(sql, (err, result) => {
     if(err){
       res.json({
@@ -93,7 +89,6 @@ router.post('/search', (req, res) => {
     })
   });
 });
-// 小说类型
 router.post('/kind', (req, res) => {
   let d = req.body;
   let total;
@@ -125,19 +120,17 @@ router.post('/kind', (req, res) => {
     })
   });
 });
-// 小说封面上传
 router.post('/head', multer.single('file'), (req, res) => {
   res.json({
     success: true,
     file: req.file
   });
 });
-// 添加小说
 router.post('/add', (req, res) => {
   let d = req.body;
-  let sql = `insert into book (name, author, kind, introduce, cover, state, wordNum, readNum)
-    values (?, ?, ?, ?, ?, ?, ?, ?)`;
-  conn.query(sql, [d.name, d.author, d.kind, d.introduce, d.cover, 1, d.wordNum, d.readNum], (err, result) => {
+  let sql = `insert into book (name, author, kind, introduce, cover, state, wordNum, readNum, finish)
+    values (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  conn.query(sql, [d.name, d.author, d.kind, d.introduce, d.cover, 1, d.wordNum, d.readNum, d.finish], (err, result) => {
     if(err){
       res.json({
         success: false,
@@ -151,12 +144,11 @@ router.post('/add', (req, res) => {
   });
   novelNum ++;
 });
-// 修改小说
 router.post('/modify', (req, res) => {
   let d = req.body;
   let sql = `update book set name = ?, author = ?, kind = ?, introduce = ?, 
-    cover = ?, wordNum = ?, readNum = ? where id = ?`;
-  conn.query(sql, [d.name, d.author, d.kind, d.introduce, d.cover, d.wordNum, d.readNum, d.id], (err, result) => {
+    cover = ?, wordNum = ?, readNum = ?, finish = ? where id = ?`;
+  conn.query(sql, [d.name, d.author, d.kind, d.introduce, d.cover, d.wordNum, d.readNum, d.finish, d.id], (err, result) => {
     if(err){
       res.json({
         success: false,
@@ -169,7 +161,6 @@ router.post('/modify', (req, res) => {
     })
   });
 });
-// 添加章节
 router.post('/catalog', (req, res) => {
   let d = req.body;
   let time = new Date().toLocaleString();

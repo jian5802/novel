@@ -51,6 +51,13 @@
           option(value="悬疑灵异") 悬疑灵异
           option(value="女生网") 女生网
           option(value="二次元") 二次元
+      .finish
+        .wjzt
+          span.bt *
+          span 完结状态
+        select.wj-select(v-model="book.finish")
+          option(value=1) 完结
+          option(value=0) 连载
       .wordNum
         .zs
           span.bt *
@@ -92,7 +99,8 @@ export default {
         kind: '玄幻',
         introduce: '',
         wordNum: '',
-        readNum: ''
+        readNum: '',
+        finish: 0
       }
     }
   },
@@ -143,6 +151,7 @@ export default {
       this.book.wordNum = ''
       this.book.readNum = ''
       this.imageUrl = ''
+      this.book.finish = 0
     }
   }
 }
@@ -266,9 +275,31 @@ export default {
           padding-left: 20px;
         }
       }
-      .wordNum{
+      .finish{
         position: relative;
         top: 350px;
+        width: 100%;
+        .wjzt{
+          position: absolute;
+          left: 0;
+          width: 178px;
+          height: 40px;
+          line-height: 40px;
+        }
+        .wj-select{
+          width: 300px;
+          height: 40px;
+          position: absolute;
+          left: 200px;
+          border-radius: 5px;
+          border-color: #DCDFE6;
+          color: #606266;
+          padding-left: 20px;
+        }
+      }
+      .wordNum{
+        position: relative;
+        top: 400px;
         width: 100%;
         .zs{
           position: absolute;
@@ -285,7 +316,7 @@ export default {
       }
       .readNum{
         position: relative;
-        top: 400px;
+        top: 450px;
         width: 100%;
         .ydl{
           position: absolute;
@@ -302,7 +333,7 @@ export default {
       }
       .introduce{
         position: relative;
-        top: 450px;
+        top: 500px;
         width: 100%;
         .js{
           position: absolute;
@@ -321,7 +352,8 @@ export default {
     .foot{
       width: 100%;
       position: relative;
-      top: 600px;
+      top: 650px;
+      text-align: center;
     }
   }
 </style>

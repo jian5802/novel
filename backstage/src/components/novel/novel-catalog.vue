@@ -147,6 +147,7 @@ export default {
     }
   }
   .foot{
+    text-align: center;
     position: relative;
     widows: 100%;
     top: 400px;

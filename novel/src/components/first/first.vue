@@ -13,91 +13,115 @@
         el-dropdown-menu(slot="dropdown")
           el-dropdown-item(command="modify") 修改信息
           el-dropdown-item(command="out") 退出登录
-    .left
-      .one
-        .xh(@click="gotoLx('玄幻')")
+    .first-top
+      .left
+        .one
+          .xh(@click="gotoLx('玄幻')")
+            .icon
+            span.lx 玄幻
+            span.num {{kindNum.xh}}
+          .qh(@click="gotoLx('奇幻')")
+            .icon
+            span.lx 奇幻
+            span.num {{kindNum.qh}}
+        .two
+          .wx(@click="gotoLx('武侠')")
+            .icon
+            span.lx 武侠
+            span.num {{kindNum.wx}}
+          .xx(@click="gotoLx('仙侠')")
+            .icon
+            span.lx 仙侠
+            span.num {{kindNum.xx}}
+        .three
+          .ds(@click="gotoLx('都市')")
+            .icon
+            span.lx 都市
+            span.num {{kindNum.ds}}
+          .xs(@click="gotoLx('现实')")
+            .icon
+            span.lx 现实
+            span.num {{kindNum.xs}}
+        .four
+          .js(@click="gotoLx('军事')")
+            .icon
+            span.lx 军事
+            span.num {{kindNum.js}}
+          .ls(@click="gotoLx('历史')")
+            .icon
+            span.lx 历史
+            span.num {{kindNum.ls}}
+        .five
+          .yx(@click="gotoLx('游戏')")
+            .icon
+            span.lx 游戏
+            span.num {{kindNum.yx}}
+          .ty(@click="gotoLx('体育')")
+            .icon
+            span.lx 体育
+            span.num {{kindNum.ty}}
+        .six
+          .kh(@click="gotoLx('科幻')")
+            .icon
+            span.lx 科幻
+            span.num {{kindNum.kh}}
+          .xyly(@click="gotoLx('悬疑灵异')")
+            .icon
+            span.lx 悬疑灵异
+            span.num {{kindNum.xyly}}
+        .seven
+          .nsw(@click="gotoLx('女生网')")
+            .icon
+            span.lx 女生网
+            span.num {{kindNum.nsw}}
+          .ecy(@click="gotoLx('二次元')")
+            .icon
+            span.lx 二次元
+            span.num {{kindNum.ecy}}
+      .middel
+        el-carousel.carousel(trigger="click")
+          el-carousel-item(v-for="item in bookImg", :key="item.id")
+            img.books(:src="item.url", @click="goDetail(item.id)")
+        .one(@click="goDetail(38)")
+          .title 火影里的聊天群
+          .text 来到木叶没有金手指，多出一个聊天群
           .icon
-          span.lx 玄幻
-          span.num {{kindNum.xh}}
-        .qh(@click="gotoLx('奇幻')")
+            img(src="/images/book/first-mid-1.jpg")
+        .two(@click="goDetail(39)")
+          .title 我只想安静地打游戏
+          .text 一滴血一条命，别人打游戏爆肝，我打游戏爆血。
           .icon
-          span.lx 奇幻
-          span.num {{kindNum.qh}}
-      .two
-        .wx(@click="gotoLx('武侠')")
-          .icon
-          span.lx 武侠
-          span.num {{kindNum.wx}}
-        .xx(@click="gotoLx('仙侠')")
-          .icon
-          span.lx 仙侠
-          span.num {{kindNum.xx}}
-      .three
-        .ds(@click="gotoLx('都市')")
-          .icon
-          span.lx 都市
-          span.num {{kindNum.ds}}
-        .xs(@click="gotoLx('现实')")
-          .icon
-          span.lx 现实
-          span.num {{kindNum.xs}}
-      .four
-        .js(@click="gotoLx('军事')")
-          .icon
-          span.lx 军事
-          span.num {{kindNum.js}}
-        .ls(@click="gotoLx('历史')")
-          .icon
-          span.lx 历史
-          span.num {{kindNum.ls}}
-      .five
-        .yx(@click="gotoLx('游戏')")
-          .icon
-          span.lx 游戏
-          span.num {{kindNum.yx}}
-        .ty(@click="gotoLx('体育')")
-          .icon
-          span.lx 体育
-          span.num {{kindNum.ty}}
-      .six
-        .kh(@click="gotoLx('科幻')")
-          .icon
-          span.lx 科幻
-          span.num {{kindNum.kh}}
-        .xyly(@click="gotoLx('悬疑灵异')")
-          .icon
-          span.lx 悬疑灵异
-          span.num {{kindNum.xyly}}
-      .seven
-        .nsw(@click="gotoLx('女生网')")
-          .icon
-          span.lx 女生网
-          span.num {{kindNum.nsw}}
-        .ecy(@click="gotoLx('二次元')")
-          .icon
-          span.lx 二次元
-          span.num {{kindNum.ecy}}
-    .middel
-      el-carousel.carousel(trigger="click")
-        el-carousel-item(v-for="item in bookImg", :key="item.id")
-          img.books(:src="item.url", @click="goDetail(item.id)")
-      .one(@click="goDetail(38)")
-        .title 火影里的聊天群
-        .text 来到木叶没有金手指，多出一个聊天群
-        .icon
-          img(src="/images/book/first-mid-1.jpg")
-      .two(@click="goDetail(39)")
-        .title 我只想安静地打游戏
-        .text 一滴血一条命，别人打游戏爆肝，我打游戏爆血。
-        .icon
-          img(src="/images/book/first-mid-2.jpg")
-    .right
-      h3.title 本周强推
-      ul
-        li(v-for="item in recommend", @click="goNovel(item.id)")
-          span.lx 「{{item.kind}}」
-          span.mz(:title="item.name") {{item.name}}
-          span.zz(:title="item.author") {{item.author}}
+            img(src="/images/book/first-mid-2.jpg")
+      .right
+        h3.title 本周强推
+        ul
+          li(v-for="item in recommend", @click="goNovel(item.id)")
+            span.lx 「{{item.kind}}」
+            span.mz(:title="item.name") {{item.name}}
+            span.zz(:title="item.author") {{item.author}}
+    .first-bottom
+      .bottom-left
+        .bjtj 编辑推荐
+        .left-top
+          el-carousel(:interval="4000", type="card", height="170px", trigger="click", @change="change")
+            el-carousel-item(v-for="item in bjtjTop", :key="item.id")
+              img.books(:src="item.cover", @click="goDetail(item.id)")
+          .bjtj-msg
+            .bjtj-name {{presentItem.name}}
+            .bjtj-introduce {{presentItem.introduce}}
+            el-button(type="danger", @click="goDetail(presentItem.id)") 书籍详情
+        .left-bottom
+          .left-bottom-one(v-for="item in bjtjNext", :key="item.id")
+            .name(@click="goDetail(item.id)") {{item.name}}
+            .readnum {{item.readNum}}
+              span 万次阅读
+            .zpjj {{item.introduce}}
+      .bottom-right
+        .wwxf 网文新风
+        .wwxf-one(v-for="item in newbooks")
+          span.wwxf-lx 「{{item.kind}}」
+          span.wwxf-mz(:title="item.name", @click="goDetail(item.id)") {{item.name}}
+          span.wwxf-zz(:title="item.author") {{item.author}}
 </template>
 
 <script>
@@ -105,8 +129,12 @@ export default {
   data () {
     return {
       user: Object,
+      presentItem: {},
       book: '',
       kind: {},
+      bjtjTop: [],
+      bjtjNext: [],
+      newbooks: [],
       recommend: [],
       kindNum: {
         xh: 0,
@@ -151,6 +179,8 @@ export default {
   mounted () {
     this.init()
     this.getUser()
+    this.getNewBooks()
+    this.getbjlj()
   },
   methods: {
     init () {
@@ -166,6 +196,51 @@ export default {
           this.recommend = res.data.recommend
           this.kind = res.data.kindNum
           this.getNum()
+        } else {
+          this.$alert(res.data.message)
+        }
+      }).catch(err => {
+        this.$alert(err.statusText)
+      })
+    },
+    getNewBooks () {
+      this.$axios({
+        url: '/user/novel/new',
+        method: 'post',
+        data: {
+          start: 7,
+          num: 11,
+          kind: 'all'
+        }
+      }).then(res => {
+        if (res.data.success) {
+          this.newbooks = res.data.new
+        } else {
+          this.$alert(res.data.message)
+        }
+      }).catch(err => {
+        this.$alert(err.statusText)
+      })
+    },
+    getbjlj () {
+      this.bjtjTop = []
+      this.bjtjNext = []
+      this.$axios({
+        url: '/user/novel/search/week',
+        method: 'post',
+        data: {
+          start: 33,
+          num: 16,
+          kind: 'all'
+        }
+      }).then(res => {
+        if (res.data.success) {
+          for (let i = 0; i < 8; i++) {
+            this.bjtjTop.push(res.data.recommend[i])
+          }
+          for (let i = 8; i < 16; i++) {
+            this.bjtjNext.push(res.data.recommend[i])
+          }
         } else {
           this.$alert(res.data.message)
         }
@@ -229,6 +304,9 @@ export default {
       } else if (val === 'out') {
         this.$router.push({path: '/'})
       }
+    },
+    change (val, old) {
+      this.presentItem = this.bjtjTop[val]
     },
     modify () {
       this.$router.push({path: '/user/modify'})
@@ -327,6 +405,11 @@ export default {
           }
         }
       }
+    }
+    .first-top{
+      position: relative;
+      width: 100%;
+      height: 450px;
     }
     .left{
       cursor: pointer;
@@ -772,8 +855,8 @@ export default {
       background-color: $bg-color-user-two;
       clear: both;
       border: 1px solid $color-base-gray;
-      position: relative;
-      top: -410px;
+      position: absolute;
+      top: 0px;
       left: 76%;
       width: 14%;
       height: 410px;
@@ -786,11 +869,12 @@ export default {
           list-style:none;
           position: relative;
           cursor: pointer;
-          // border-bottom: 1px solid $color-base-gray;
           .lx{
+            overflow: hidden;
+            text-align: left;
             display: inline-block;
             height: 100%;
-            width: 55px;
+            width: 85px;
             position: absolute;
             left: 0%;
             top: 0px;
@@ -806,7 +890,7 @@ export default {
             font-size: 14px;
             text-align: left;
             position: absolute;
-            left: 30%;
+            left: 35%;
           }
           .zz{
             width: 30%;
@@ -827,6 +911,202 @@ export default {
         text-decoration: none;
         color: $font-user-title;
       }
+    }
+    .first-bottom{
+      position: relative;
+      width: 100%;
+      .bottom-left{
+        width: 65%;
+        height: 600px;
+        position: absolute;
+        left: 10%;
+        .bjtj{
+          text-align: left;
+          width: 100%;
+          height: 30px;
+          font-size: 18px;
+          font-weight: 600;
+          line-height: 26px;
+          padding-bottom: 4px;
+          color: $font-user-first-bjlj;
+          border-bottom: 1px solid $font-color-label;
+        }
+        .left-top{
+          position: relative;
+          width: 100%;
+          height: 200px;
+          border-bottom: 1px solid $border-color-line;
+          .el-carousel{
+            margin-top: 30px;
+            width: 30%;
+            .books{
+              box-shadow: 0 1px 3px $font-color-lighter;
+              max-height: 128px;
+            }
+            .el-carousel__indicators{
+              display: none;
+            }
+          }
+          .bjtj-msg{
+            width: 60%;
+            height: 170px;
+            position: absolute;
+            right: 6%;
+            top: 0px;
+            .bjtj-name{
+              text-align: left;
+              line-height: 30px;
+              font-size: 18px;
+              font-weight: 600;
+              overflow: hidden;
+              width: 100%;
+              height: 30px;
+              position: absolute;
+              left: 0;
+              top: 10px;
+            }
+            .bjtj-introduce{
+              position: absolute;
+              left: 0;
+              top: 40px;
+              font-size: 14px;
+              width: 100%;
+              height: 60px;
+              overflow: hidden;
+              line-height: 20px;
+              text-align: left;
+              letter-spacing: 2px;
+            }
+            .el-button{
+              position: absolute;
+              left: 0;
+              top: 110px;
+            }
+          }
+        }
+        .left-bottom{
+          text-align: left;
+          overflow: hidden;
+          width: 100%;
+          height: 320px;
+          position: relative;
+          .left-bottom-one{
+            border-bottom: 1px solid $border-color-line;
+            display: inline-block;
+            width: 25%;
+            height: 160px;
+            .name{
+              cursor: pointer;
+              overflow: hidden;
+              width: 90%;
+              height: 20px;
+              color: $font-user-first-bjlj;
+              font-size: 16px;
+              text-align: left;
+              line-height: 20px;
+              margin-top: 30px;
+            }
+            .name:hover{
+              color: $color-base-red;
+            }
+            .readnum{
+              font-family: Arial;
+              font-weight: 700;
+              overflow: hidden;
+              width: 90%;
+              height: 20px;
+              line-height: 20px;
+              margin-top: 10px;
+              text-align: left;
+              font-size: 16px;
+              color: $bg-user-bjlj;
+              span{
+                font-size: 12px;
+                vertical-align: middle;
+              }
+            }
+            .zpjj{
+              width: 90%;
+              height: 60px;
+              line-height: 20px;
+              font-size: 12px;
+              color: $font-color-label;
+              overflow: hidden;
+              text-align: left;
+              letter-spacing: 1px;
+            }
+          }
+        }
+      }
+      .bottom-right{
+        overflow: hidden;
+        width: 14%;
+        height: 600px;
+        position: absolute;
+        right: 10%;
+        top: 0;
+        .wwxf{
+          font-size: 18px;
+          font-weight: 600;
+          text-align: left;
+          width: 100%;
+          height: 30px;
+          line-height: 26px;
+          padding-bottom: 4px;
+          color: $font-user-first-bjlj;
+          border-bottom: 1px solid $font-color-label;
+        }
+        .wwxf-one{
+          position: relative;
+          width: 100%;
+          height: 50px;
+          border-bottom: 1px solid $border-color-line;
+          .wwxf-lx{
+            overflow: hidden;
+            text-align: left;
+            display: inline-block;
+            height: 50px;
+            width: 85px;
+            line-height: 50px;
+            color: $font-user-kind;
+            font-size: 13px;
+            position: absolute;
+            left: 0px;
+          }
+          .wwxf-mz{
+            cursor: pointer;
+            display: inline-block;
+            width: 40%;
+            height: 50px;
+            line-height: 50px;
+            overflow: hidden;
+            font-size: 14px;
+            text-align: left;
+            position: absolute;
+            left: 35%;
+          }
+          .wwxf-mz:hover{
+            color: $color-base-red;
+          }
+          .wwxf-zz{
+            width: 30%;
+            height: 50px;
+            line-height: 50px;
+            overflow: hidden;
+            display: inline-block;
+            font-size: 12px;
+            color: $font-user-author;
+            position: absolute;
+            right: 0%;
+          }
+        }
+      }
+    }
+    .el-carousel__arrow--left{
+      background-color: rgba(41, 40, 40, 0.3);
+    }
+    .el-carousel__arrow--right{
+      background-color: rgba(41, 40, 40, 0.3);
     }
   }
 </style>

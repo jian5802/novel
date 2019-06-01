@@ -160,6 +160,9 @@ export default {
         if (res.data.success) {
           this.novelList = res.data.novelList
           this.total = res.data.total
+          if ((this.total / this.pageSize) + 1 < this.pageNum) {
+            this.handleCurrentChange(1)
+          }
         } else {
           this.$alert(res.data.message)
         }

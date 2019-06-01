@@ -14,6 +14,8 @@ $color-base-danger: #E15616;
 $color-base-success: #31C37C;
 $color-base-name: rgb(84, 92, 100);
 $color-base-menu: rgb(255, 255, 255);
+$color-base-user-menu: #3e3d43;
+$color-user-novel-kind: #9fadc9;
 
 /* Border
   -------------------------- */
@@ -26,7 +28,7 @@ $border-table-color: #E3E4E8;
 $border-dialog-color: #e5e5e5;
 $border-hint-color: #f9d08f;
 $border-color-img: #409EFF; 
-
+$border-user-kind: #ffb0b4;
 
 /* background
   -------------------------- */
@@ -37,7 +39,10 @@ $bg-color-disabled: #eeeeee;
 $bg-color-hint: #fff9eb;
 $bg-color-fixed-column: #e1f1fa;
 $bg-color-table-header: $bg-color-body;
-
+$bg-color-user-first: #f7f6f2;
+$bg-color-user-two: #fcfcfa;
+$bg-user-bjlj: #bf2c24;
+$bg-user-gg: #e67225;
 /* Font
   -------------------------- */
 $font-family: "Microsoft YaHei", Arial;
@@ -53,6 +58,13 @@ $font-color-label: #666;
 $font-color-lighter: #999;
 $font-color-disabled: #bbb;
 $font-color-placeholder: #ccc;
+$font-user-title: #262626;
+$font-user-author: #b3b3b3;
+$font-user-kind: grey;
+$font-user-blue: #0060bf;
+$font-user-detail: #a6a6a6;
+$font-user-sm: #3f5a93;
+$font-user-first-bjlj: #1a1a1a;
 
 $box-shadow: 0 6px 12px rgba(0,0,0,.175);
 

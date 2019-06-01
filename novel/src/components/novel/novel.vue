@@ -207,7 +207,7 @@ export default {
       this.gotoLx(val)
     },
     getSearch () {
-      this.$router.push({path: '/user/search', query: {name: this.book}})
+      this.$router.push({path: '/user/search', query: {book: this.book}})
     },
     self (val) {
       if (val === 'modify') {
@@ -423,7 +423,7 @@ export default {
               cursor: pointer;
               text-align: center;
               display: inline-block;
-              width: 40px;
+              width: 80px;
               height: 24px;
               color: $bg-user-bjlj;
               border: 1px solid $border-user-kind;
@@ -554,7 +554,7 @@ export default {
               font-size: 12px;
               color: $button-base-color;
               display: inline-block;
-              width: 30px;
+              width: 45px;
               text-align: center;
               letter-spacing: 1px;
               margin-left: 10px;

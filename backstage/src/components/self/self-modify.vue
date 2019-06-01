@@ -319,6 +319,7 @@ export default {
       }
     }
     .foot{
+      text-align: center;
       width: 100%;
       position: relative;
       top: 600px;

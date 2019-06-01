@@ -7,9 +7,7 @@ conn.query(sql, (err, result) => {
   }
   adminNum = result.length + 1;
 })
-//文件上传
 let storage = multer.diskStorage({
-  //file 上传上来的文件的相关信息
   destination: function (req, file, cb) {
     cb(null, `./static/images/admin`);
   },
