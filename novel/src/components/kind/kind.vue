@@ -484,7 +484,6 @@ export default {
               width: 113px;
               height: 143px;
               margin-top: 5%;
-              overflow: hidden;
               background-image: url('../../images/book_bottom.png');
               background-repeat: no-repeat;
               background-position: 1px 1px;
@@ -495,6 +494,7 @@ export default {
                 width: 105px;
                 height: 138px;
                 max-width: 100%;
+                transform-origin: left;
                 transition: all 0.5s;
               }
             }
@@ -525,7 +525,7 @@ export default {
               height: 30px;
             }
             .mid-cover:hover img{
-              transform: rotateY(30deg);
+              transform: rotateY(20deg) skewY(-5deg);
             }
           }
         }
