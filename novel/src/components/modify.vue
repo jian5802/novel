@@ -10,6 +10,7 @@
           span.bt *
           span 头像
         el-upload.avatar-uploader(
+          accept="image/*",
           action="/admin/user/head",
           :show-file-list="false",
           :on-success="uploadSuccess",
