@@ -17,6 +17,7 @@
     "axios": "^0.18.0",
     "css-loader": "^0.28.11",
     "element-ui": "^2.8.2",
+    "node-sass": "^4.13.1",
     "pug": "^2.0.3",
     "sass": "^1.20.1",
     "style-loader": "^0.23.1",

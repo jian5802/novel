@@ -10,6 +10,10 @@
         el-input(v-model="form.password", type="password")
       el-form-item
         el-button.submit(type="primary", @click="submit()") 登录
+    a.foot(target="_blank", href="http://www.beian.gov.cn/portal/registerSystemInfo?spm=5176.12825654.7y9jhqsfz.112.3dbd2c4aNCX2Xz&aly_as=bYGs5Dpa")
+      img.foot-gov(data-src="http://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png",
+        src="http://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png")
+      span.foot-text 蜀ICP备19012441号-1
 </template>
 
 <script>
@@ -76,6 +80,7 @@ export default {
 </script>
 <style lang="scss">
   .login{
+    max-height: calc(100vh);
     z-index: 0;
     position: relative;
     background-size:cover;
@@ -88,7 +93,7 @@ export default {
       color: $color-secondary-light;
     }
     .login-form{
-      width: 400px;
+      width: 430px;
       height: 300px;
       z-index: 1;
       position: absolute;
@@ -112,6 +117,31 @@ export default {
         position: absolute;
         top: 200px;
         left: 70px;
+      }
+    }
+    .foot {
+      z-index: 999;
+      position: absolute;
+      top: calc(100vh - 30px);
+      left: calc(50vw - 100px);
+      text-align: center;
+      display: inline-block;
+      width: 200px;
+      height: 30px;
+      font-size: 12px;
+      text-decoration: none;
+      .foot-gov {
+        display: inline-block;
+        height: 20px;
+        margin-right: 12px;
+        position: relative;
+        top: 5px;
+      }
+      .foot-text {
+        height: 20px;
+        line-height: 20px;
+        color: #FFA533;
+        margin-left: -7px;
       }
     }
   }
